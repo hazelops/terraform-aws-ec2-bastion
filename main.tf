@@ -1,28 +1,3 @@
-locals {
-  name = "${var.env}-bastion"
-  ssh_config = concat([
-    "Host ${aws_route53_record.this.name}",
-    "User ubuntu",
-    "IdentityFile ~/.ssh/id_rsa",
-  ],var.ssh_forward_rules)
-}
-
-data "aws_ami" "this" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-*-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
 # TODO: This needs to become an autoscale of one instance
 resource "aws_instance" "this" {
   ami                         = data.aws_ami.this.id

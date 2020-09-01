@@ -36,3 +36,12 @@ variable "allowed_cidr_blocks" {
     "0.0.0.0/0"
   ]
 }
+
+locals {
+  name = "${var.env}-bastion"
+  ssh_config = concat([
+    "Host ${aws_route53_record.this.name}",
+    "User ubuntu",
+    "IdentityFile ~/.ssh/id_rsa",
+  ],var.ssh_forward_rules)
+}
