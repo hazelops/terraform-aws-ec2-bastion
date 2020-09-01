@@ -1,11 +1,7 @@
 variable "env" {}
+variable "aws_profile" {}
 variable "vpc_id" {}
-
-variable "zone_id" {
-  description = "Route53 Domain Zone ID"
-}
-
-variable "public_subnets" {}
+variable "private_subnets" {}
 variable "ec2_key_pair_name" {}
 
 variable "instance_type" {
@@ -38,10 +34,14 @@ variable "allowed_cidr_blocks" {
 }
 
 locals {
-  name = "${var.env}-bastion"
+  name         = "${var.env}-bastion"
+  proxycommand = <<-EOT
+    ProxyCommand sh -c "aws --profile ${var.aws_profile} ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+    EOT
   ssh_config = concat([
-    "Host ${aws_route53_record.this.name}",
-    "User ubuntu",
-    "IdentityFile ~/.ssh/id_rsa",
-  ],var.ssh_forward_rules)
+    "# SSH over Session Manager",
+    "host i-* mi-*",
+    local.proxycommand,
+  ], var.ssh_forward_rules)
+  ssm_document_name = local.name
 }

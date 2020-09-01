@@ -1,8 +1,8 @@
 output "cmd" {
   value = {
-    up = "ssh -M -S bastion.sock -fNT ubuntu@${aws_route53_record.this.name}"
-    down = "ssh -S bastion.sock -O exit ubuntu@${aws_route53_record.this.name}"
-    status = "ssh -S bastion.sock -O check ubuntu@${aws_route53_record.this.name}"
+    up     = "ssh -M -S bastion.sock -fNT ubuntu@${element(aws_instance.this.*.id, 0)} "
+    down   = "ssh -S bastion.sock -O exit ubuntu@${element(aws_instance.this.*.id, 0)} "
+    status = "ssh -S bastion.sock -O check ubuntu@${element(aws_instance.this.*.id, 0)}"
   }
 }
 
