@@ -13,12 +13,6 @@ variable "name" {
   default = "bastion"
 }
 
-variable "security_groups" {
-  description = "External security groups to add to bastion host"
-  type        = list(any)
-  default     = []
-}
-
 variable "ext_security_groups" {
   description = "External security groups to add to bastion host"
   type        = list(any)
