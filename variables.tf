@@ -19,6 +19,17 @@ variable "security_groups" {
   default = []
 }
 
+variable "ext_security_groups" {
+  description = "External security groups to add to bastion host"
+  type        = list(any)
+  default     = []
+}
+
+variable "ssm_role" {
+  type    = string
+  default = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+}
+
 variable "ssh_forward_rules" {
   type = list(string)
   description = "Rules that will enable port forwarding. SSH Config syntax"

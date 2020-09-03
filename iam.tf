@@ -1,20 +1,20 @@
 #AWS SSM resources
-resource "aws_iam_role" "ssm_bastion" {
-  name               = "${var.name}-ssm-bastion"
-  assume_role_policy = data.aws_iam_policy_document.assume_ec2_ssm.json
+resource "aws_iam_role" "ssm_role" {
+  name               = "${var.name}-ssm-terraform"
+  assume_role_policy = data.aws_iam_policy_document.assume.json
 }
 
-resource "aws_iam_role_policy_attachment" "ssm_bastion" {
-  role       = aws_iam_role.ssm_bastion.name
-  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
+resource "aws_iam_role_policy_attachment" "ssm_role" {
+  role       = aws_iam_role.ssm_role.name
+  policy_arn = var.ssm_role
 }
 
 resource "aws_iam_instance_profile" "bastion" {
   name = "ssm-poc-instance-profile"
-  role = aws_iam_role.ssm_bastion.name
+  role = aws_iam_role.ssm_role.name
 }
 
-data "aws_iam_policy_document" "assume_ec2_ssm" {
+data "aws_iam_policy_document" "assume" {
   statement {
     effect = "Allow"
 
