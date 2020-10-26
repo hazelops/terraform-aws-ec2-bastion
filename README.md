@@ -1,6 +1,15 @@
 # v.2.0 AWS Terraform Module - EC2 Bastion over SSM 
 Module creates ec2 bastion host in private subnet (without Public IP-address) of VPC and connects it to System Manager. 
 Bastion host can be controlled by Session Manager documents.
+
+### Prerequisites
+EC2:
+   - System Manager Agent must be installed and running (version 2.3.672.0 or more recent)
+   - The EC2 instance must have an IAM role with permission to invoke Systems Manager API (e.g. AmazonSSMManagedInstanceCore)
+   
+Local PC:
+   - AWS Command Line Interface (CLI) (1.16.220 or more recent)
+   - System Manager CLI extension (version 1.1.26.0 or more recent)
    
 ### Example:
 ```
