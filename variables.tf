@@ -3,6 +3,7 @@ variable "aws_profile" {}
 variable "vpc_id" {}
 variable "private_subnets" {}
 variable "ec2_key_pair_name" {}
+variable "ssh_public_key" {}
 
 variable "instance_type" {
   type    = string
@@ -41,7 +42,7 @@ variable "allowed_cidr_blocks" {
 locals {
   name         = "${var.env}-bastion"
   proxycommand = <<-EOT
-    ProxyCommand sh -c "aws --profile ${var.aws_profile} ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+    ProxyCommand sh -c "aws --profile ${var.aws_profile} ssm send-command --instance-ids %h --document-name AWS-RunShellScript --comment 'Add an SSH public key to authorized_keys' --parameters commands='echo ${var.ssh_public_key} >> /home/ubuntu/.ssh/authorized_keys' && aws --profile ${var.aws_profile} ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
     EOT
   ssh_config = concat([
     "# SSH over Session Manager",
