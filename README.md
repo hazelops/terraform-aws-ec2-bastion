@@ -1,5 +1,5 @@
 # v.2.0 AWS Terraform Module - EC2 Bastion over SSM 
-Module creates ec2 bastion host in private subnet (without Public IP-address) of VPC and connects it to System Manager. 
+Module creates ec2 bastion host in private subnet (without Public IP-address) of VPC and connects it to System Manager and copy your ssh public key to .ssh/authorized_keys on the bastion ec2. 
 Bastion host can be controlled by Session Manager documents.
 
 ### Prerequisites
@@ -10,6 +10,7 @@ EC2:
 Local PC:
    - AWS Command Line Interface (CLI) (1.16.220 or more recent)
    - System Manager CLI extension (version 1.1.26.0 or more recent)
+   https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html
    
 ### Example:
 ```
@@ -21,6 +22,7 @@ module "bastion" {
     env               = var.env
     vpc_id            = local.vpc_id
     private_subnets   = local.private_subnets
+    ssh_public_key    = var.ssh_public_key
     ec2_key_pair_name = local.ec2_key_pair_name
 
     ssh_forward_rules = [
@@ -35,7 +37,7 @@ module "bastion" {
 ```
 # SSH over Session Manager
 host i-* mi-*
-    ProxyCommand sh -c "aws --profile <aws_profile> ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+    ProxyCommand sh -c "aws --profile ${var.aws_profile} ssm send-command --instance-ids %h --document-name AWS-RunShellScript --comment 'Add an SSH public key to authorized_keys' --parameters commands='echo ${var.ssh_public_key} >> /home/ubuntu/.ssh/authorized_keys' &&  aws --profile <aws_profile> ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
 ```
 2. Options to run:
 -  start tunnel:
