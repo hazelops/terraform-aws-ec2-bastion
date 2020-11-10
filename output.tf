@@ -6,6 +6,10 @@ output "cmd" {
   }
 }
 
+output "bastion_instance_id" {
+  value = element(aws_instance.this.*.id, 0)
+}
+
 output "ssh_config" {
   value = local.ssh_config
 }
