@@ -3,7 +3,6 @@ variable "aws_profile" {}
 variable "vpc_id" {}
 variable "private_subnets" {}
 variable "ec2_key_pair_name" {}
-variable "ssh_public_key" {}
 
 variable "instance_type" {
   type    = string
