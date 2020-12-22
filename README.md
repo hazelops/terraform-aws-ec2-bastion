@@ -22,7 +22,6 @@ module "bastion" {
     env               = var.env
     vpc_id            = local.vpc_id
     private_subnets   = local.private_subnets
-    ssh_public_key    = var.ssh_public_key
     ec2_key_pair_name = local.ec2_key_pair_name
 
     ssh_forward_rules = [
