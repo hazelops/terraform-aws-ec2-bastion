@@ -29,7 +29,7 @@ resource "aws_instance" "this" {
   ami                  = data.aws_ami.this.id
   key_name             = var.ec2_key_pair_name
   instance_type        = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.bastion.name
+  iam_instance_profile = aws_iam_instance_profile.this.name
   vpc_security_group_ids = concat(var.ext_security_groups, [
     aws_security_group.this.id
   ])
