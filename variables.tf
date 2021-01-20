@@ -41,7 +41,7 @@ variable "allowed_cidr_blocks" {
 locals {
   name         = "${var.env}-bastion"
   proxycommand = <<-EOT
-    ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
+    ProxyCommand sh -c "aws --profile=${var.aws_profile} ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
     EOT
   ssh_config = concat([
     "# SSH over Session Manager",
