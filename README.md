@@ -38,8 +38,7 @@ module "bastion" {
 host i-* mi-*
     ProxyCommand sh -c "aws --profile ${var.aws_profile} ssm send-command --instance-ids %h --document-name AWS-RunShellScript --comment 'Add an SSH public key to authorized_keys' --parameters commands='echo ${var.ssh_public_key} >> /home/ubuntu/.ssh/authorized_keys' &&  aws --profile <aws_profile> ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
 ```
-where `${var.aws_profile}` - actual aws cli profile
-where `${var.ssh_public_key}` - your ssh public key (~/.ssh/id_rsa.pub)
+where `${var.aws_profile}` - actual aws cli profile; and  `${var.ssh_public_key}` - your ssh public key (~/.ssh/id_rsa.pub)
 
 2. Options to run:
 -  start tunnel:
