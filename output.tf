@@ -14,5 +14,5 @@ output "ssh_config" {
   value = local.ssh_config
 }
 output "security_group" {
-  value = join("", aws_security_group.this.id)
+  value = aws_security_group.this.id
 }
