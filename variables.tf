@@ -46,6 +46,7 @@ locals {
   ssh_config = concat([
     "# SSH over Session Manager",
     "host i-* mi-*",
+    "ServerAliveInterval 180",
     local.proxycommand,
   ], var.ssh_forward_rules)
   ssm_document_name = local.name
