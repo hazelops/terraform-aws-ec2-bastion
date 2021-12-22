@@ -32,10 +32,7 @@ variable "ssh_forward_rules" {
 
 variable "allowed_cidr_blocks" {
   type        = list(string)
-  description = "List of network subnets that are allowed"
-  default = [
-    "0.0.0.0/0"
-  ]
+  description = "List of network subnets that are allowed. According to PCI-DSS, CIS AWS and SOC2 providing a default wide-open CIDR is not secure."
 }
 
 locals {
