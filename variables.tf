@@ -24,6 +24,12 @@ variable "ssm_role" {
   default = "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"
 }
 
+variable "tags" {
+  type        = map(string)
+  description = "Additional tags for the resources"
+  default = {}
+}
+
 variable "ssh_forward_rules" {
   type        = list(string)
   description = "Rules that will enable port forwarding. SSH Config syntax"
@@ -40,7 +46,7 @@ locals {
   proxycommand = <<-EOT
     ProxyCommand sh -c "aws ssm start-session --target %h --document-name AWS-StartSSHSession --parameters 'portNumber=%p'"
     EOT
-  ssh_config = concat([
+  ssh_config   = concat([
     "# SSH over Session Manager",
     "host i-* mi-*",
     "ServerAliveInterval 180",

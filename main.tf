@@ -17,28 +17,23 @@ resource "aws_security_group" "this" {
     cidr_blocks = var.allowed_cidr_blocks
   }
 
-  tags = {
-    Terraform = "true"
-    Env       = var.env
-    Name      = "${var.env}-bastion"
-  }
+  tags = merge({
+    name = "${var.env}-bastion"
+  }, var.tags)
 }
 
 # TODO: This needs to become an autoscale of one instance
 resource "aws_instance" "this" {
-  ami                  = data.aws_ami.this.id
-  key_name             = var.ec2_key_pair_name
-  instance_type        = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.this.name
+  ami                    = data.aws_ami.this.id
+  key_name               = var.ec2_key_pair_name
+  instance_type          = var.instance_type
+  iam_instance_profile   = aws_iam_instance_profile.this.name
   vpc_security_group_ids = concat(var.ext_security_groups, [
     aws_security_group.this.id
   ])
   subnet_id                   = var.private_subnets[0]
   associate_public_ip_address = false
-
-  tags = {
-    Terraform = "true"
-    Env       = var.env
-    Name      = local.name
-  }
+  tags                        = merge({
+    name = "${var.env}-bastion"
+  }, var.tags)
 }
