@@ -18,7 +18,7 @@ resource "aws_security_group" "this" {
   }
 
   tags = merge({
-    name = "${var.env}-bastion"
+    Name = "${var.env}-bastion"
   }, var.tags)
 }
 
@@ -34,6 +34,6 @@ resource "aws_instance" "this" {
   subnet_id                   = var.private_subnets[0]
   associate_public_ip_address = false
   tags                        = merge({
-    name = "${var.env}-bastion"
+    Name = "${var.env}-bastion"
   }, var.tags)
 }
