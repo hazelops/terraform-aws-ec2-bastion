@@ -1,11 +1,31 @@
-variable "env" {}
-variable "aws_profile" {}
-variable "vpc_id" {}
-variable "private_subnets" {}
-variable "ec2_key_pair_name" {}
+variable "env" {
+  type = string
+  description = "Environment name, for example `dev`"
+}
+
+variable "aws_profile" {
+  type = string
+  description = "AWS Profile to use during tunnel creation"
+}
+
+variable "vpc_id" {
+    type = string
+    description = "VPC ID"
+}
+
+variable "private_subnets" {
+    type = list(string)
+    description = "Private subnets"
+}
+
+variable "ec2_key_pair_name" {
+    type = string
+    description = "EC2 Key Pair Name"
+}
 
 variable "instance_type" {
   type    = string
+  description = "EC2 instance type for bastion host"
   default = "t3.nano"
 }
 

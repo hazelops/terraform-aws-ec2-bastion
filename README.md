@@ -17,9 +17,9 @@ Local PC:
 ```
 module "bastion" {
     source    = "hazelops/ec2-bastion/aws"
-    version   = "~> 2.0"
+    version   = "~> 3.0"
     
-    aws_profile       = var.aws_profile 
+    aws_profile       = var.aws_profile
     env               = var.env
     vpc_id            = local.vpc_id
     private_subnets   = local.private_subnets

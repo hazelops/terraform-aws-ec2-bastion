@@ -1,6 +1,5 @@
 # TODO: install Fail2ban
 resource "aws_security_group" "this" {
-  name   = "${var.env}-bastion"
   vpc_id = var.vpc_id
 
   ingress {
@@ -18,7 +17,7 @@ resource "aws_security_group" "this" {
   }
 
   tags = merge({
-    Name = "${var.env}-bastion"
+    Name = "${var.env}-${var.name}"
   }, var.tags)
 }
 
@@ -34,6 +33,6 @@ resource "aws_instance" "this" {
   subnet_id                   = var.private_subnets[0]
   associate_public_ip_address = false
   tags                        = merge({
-    Name = "${var.env}-bastion"
+    Name = "${var.env}-${var.name}"
   }, var.tags)
 }
