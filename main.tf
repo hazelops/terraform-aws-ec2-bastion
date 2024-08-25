@@ -30,8 +30,8 @@ resource "aws_instance" "this" {
   vpc_security_group_ids = concat(var.ext_security_groups, [
     aws_security_group.this.id
   ])
-  subnet_id                   = var.private_subnets[0]
-  associate_public_ip_address = false
+  subnet_id                   = len(var.public_subnets) > 0 ? var.public_subnets[0] : var.private_subnets[0]
+  associate_public_ip_address = len(var.public_subnets) > 0 ? true : false
   tags                        = merge({
     Name = "${var.env}-${var.name}"
   }, var.tags)

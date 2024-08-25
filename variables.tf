@@ -13,6 +13,11 @@ variable "vpc_id" {
     description = "VPC ID"
 }
 
+variable "public_subnets" {
+  type = list(string)
+  description = "Public subnets (if set, private subnets are ignored)"
+}
+
 variable "private_subnets" {
     type = list(string)
     description = "Private subnets"

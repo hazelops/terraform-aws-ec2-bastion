@@ -1,5 +1,5 @@
-# AWS Terraform Module EC2 Bastion over SSM v2.0
-This module creates ec2 bastion host in private subnet (without Public IP-address) of VPC and connects it to System Manager and copy your ssh public key to .ssh/authorized_keys on the bastion ec2. 
+# AWS Terraform Module EC2 Bastion over SSM
+This module creates ec2 bastion host in private subnet (without Public IP-address) of a VPC and connects it to a System Manager and copies your ssh public key to .ssh/authorized_keys on the bastion ec2. 
 Bastion host can be controlled by Session Manager documents.
 
 ### Prerequisites
@@ -126,19 +126,20 @@ No modules.
 
 ## Inputs
 
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
+| Name                                                                                            | Description | Type | Default | Required |
+|-------------------------------------------------------------------------------------------------|-------------|------|---------|:--------:|
 | <a name="input_allowed_cidr_blocks"></a> [allowed\_cidr\_blocks](#input\_allowed\_cidr\_blocks) | List of network subnets that are allowed. According to PCI-DSS, CIS AWS and SOC2 providing a default wide-open CIDR is not secure. | `list(string)` | n/a | yes |
-| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile) | n/a | `any` | n/a | yes |
-| <a name="input_ec2_key_pair_name"></a> [ec2\_key\_pair\_name](#input\_ec2\_key\_pair\_name) | n/a | `any` | n/a | yes |
-| <a name="input_env"></a> [env](#input\_env) | n/a | `any` | n/a | yes |
+| <a name="input_aws_profile"></a> [aws\_profile](#input\_aws\_profile)                           | n/a | `any` | n/a | yes |
+| <a name="input_ec2_key_pair_name"></a> [ec2\_key\_pair\_name](#input\_ec2\_key\_pair\_name)     | n/a | `any` | n/a | yes |
+| <a name="input_env"></a> [env](#input\_env)                                                     | n/a | `any` | n/a | yes |
 | <a name="input_ext_security_groups"></a> [ext\_security\_groups](#input\_ext\_security\_groups) | External security groups to add to bastion host | `list(any)` | `[]` | no |
-| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | n/a | `string` | `"t3.nano"` | no |
-| <a name="input_name"></a> [name](#input\_name) | n/a | `string` | `"bastion"` | no |
-| <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets) | n/a | `any` | n/a | yes |
-| <a name="input_ssh_forward_rules"></a> [ssh\_forward\_rules](#input\_ssh\_forward\_rules) | Rules that will enable port forwarding. SSH Config syntax | `list(string)` | `[]` | no |
-| <a name="input_ssm_role"></a> [ssm\_role](#input\_ssm\_role) | n/a | `string` | `"arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"` | no |
-| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | n/a | `any` | n/a | yes |
+| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type)                     | n/a | `string` | `"t3.nano"` | no |
+| <a name="input_name"></a> [name](#input\_name)                                                  | n/a | `string` | `"bastion"` | no |
+| <a name="input_public_subnets"></a> [public\_subnets](#input\_private\_subnets)                 | n/a | `any` | n/a | yes |
+| <a name="input_private_subnets"></a> [private\_subnets](#input\_private\_subnets)               | n/a | `any` | n/a | yes |
+| <a name="input_ssh_forward_rules"></a> [ssh\_forward\_rules](#input\_ssh\_forward\_rules)       | Rules that will enable port forwarding. SSH Config syntax | `list(string)` | `[]` | no |
+| <a name="input_ssm_role"></a> [ssm\_role](#input\_ssm\_role)                                    | n/a | `string` | `"arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM"` | no |
+| <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id)                                          | n/a | `any` | n/a | yes |
 
 ## Outputs
 
