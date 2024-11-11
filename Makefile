@@ -1,2 +1,0 @@
-test:
-	@echo "TBD: Linter"
