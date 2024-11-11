@@ -1,0 +1,69 @@
+name: "Terraform Checks"
+defaults:
+  run:
+    shell: bash
+
+on:
+  pull_request:
+    branches:
+      - master
+      - v4.x.x
+
+jobs:
+  # Performs linting and format checks and suggests fixes on PR
+  terraform-linter:
+    name: Terraform Linter
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5.6"
+
+      - name: Terraform init
+        run: terraform init
+
+      - name: Tflint Report Output
+        uses: reviewdog/action-tflint@v1.23.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tflint_version: "v0.49.0"  # Version set due to this https://github.com/reviewdog/action-tflint/issues/83
+          reporter: github-pr-review
+          fail_on_error: "true"
+          filter_mode: "added"
+          flags: "--module"  # This option should work until tflint v0.5.1.
+
+  # Performs liniting and format checks and suggests fixes on PR
+  terraform-formatter:
+    name: Terraform Formatter
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.5.6"
+
+      - name: Terraform init
+        run: terraform init
+
+      # This step applies format suggestions locally which would be used by a suggester
+      - name: Terraform Format suggestions
+        run: terraform fmt
+
+      - uses: reviewdog/action-suggester@v1.18.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tool_name: "terraform"
+          fail_on_error: "true"
+          filter_mode: "added"

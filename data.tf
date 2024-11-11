@@ -1,15 +1,19 @@
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
+# Get latest AMI info for Amazon Linux
 data "aws_ami" "this" {
   most_recent = true
 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-*-20.*-amd64-server-*"]
+    values = ["al2023-ami-2023*-*-x86_64"]
   }
 
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
-  owners = ["099720109477"] # Canonical
+  owners = ["amazon"]
 }
