@@ -133,14 +133,6 @@ module "asg_bastion" {
     {
       resource_type = "instance"
       tags          = var.tags
-    },
-    {
-      resource_type = "volume"
-      tags          = {}
-    },
-    {
-      resource_type = "spot-instances-request"
-      tags          = {}
     }
   ]
 }
