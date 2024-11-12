@@ -10,7 +10,7 @@ There is no need to expose it via a public IP for SSH access since we're using S
    
 ## Usage Example
 Below is a simple usage example of the module. 
-```
+```terraform
 module "bastion" {
     source    = "hazelops/ec2-bastion/aws"
     version   = "~> 4.0"
@@ -66,7 +66,7 @@ module "opensearch_api" {
 ### AWS SSM AWS-StartPortForwardingSessionToRemoteHost Usage
 This is a simple example without using `atun.io` discovery tags.
 This option is limited to a single host and port.
-```
+```bash
 aws ssm start-session \
 --target i-xxxxxxxxxxxx \
 --document-name AWS-StartPortForwardingSessionToRemoteHost \
@@ -76,7 +76,7 @@ aws ssm start-session \
 
 ### AWS SSM With atun.io Discovery Tags
 Get [atun](https://github.com/automationd/atun)
-```
+```bash
 atun up
 ```
 
