@@ -22,19 +22,23 @@ module "bastion" {
     tags = {
       # Optionally add atun.io-compatible configuration here for Tunnel Discovery 
       "atun.io/env" = "dev"
-      "atun.io/version" = "1"
+      "atun.io/version" = "1"      
+      
+      ## Forwarding RDS to a local port 15432 
       "atun.io/host/${module.rds_api.cluster_endpoint}" = jsonencode({
         "proto" = "ssm"
         "local" =  15432
         "remote" = module.rds_api.api.cluster_port
       }),
       
+      ## Forwarding Redis to a local port 16379
       "atun.io/host/${module.redis_api.cache_nodes.0.address}" = jsonencode({
         "proto" = "ssm"
         "local" =  16379
         "remote" = module.redis_api.cache_nodes.0.port
       }),
-      #
+      
+      ## Forwarding OpenSearch to a local port 10443
       "atun.io/host/${module.opensearch_api.endpoint}" = jsonencode({
         "proto" = "ssm"
         "local" =  10443
@@ -42,7 +46,6 @@ module "bastion" {
       }),
     }
 }
-
 
 ### Modules Omitted ###
 module "rds_api" {
