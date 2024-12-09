@@ -36,6 +36,11 @@ variable "instance_type" {
   default     = "t3.nano"
 }
 
+variable "instance_ami" {
+  type = string
+  description = "AMI ID override for the bastion host. Keep in mind, this module config is targeting Amazon Linux 2023)"
+  default = ""
+}
 
 variable "security_groups" {
   type        = list(any)

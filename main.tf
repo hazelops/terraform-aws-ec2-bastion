@@ -24,7 +24,7 @@ resource "aws_security_group" "this" {
 
 resource "aws_instance" "this" {
   count                = var.asg_enabled ? 0 : 1
-  ami                  = data.aws_ami.this.id
+  ami                  = len(var.instance_ami) > 0 ? var.instance_ami : data.aws_ami.this.id
   key_name             = var.ec2_key_pair_name
   instance_type        = var.instance_type
   iam_instance_profile = aws_iam_instance_profile.this[count.index].name
@@ -59,7 +59,7 @@ module "asg_bastion" {
   launch_template_description = "SSM Bastion Host"
   update_default_version      = true
 
-  image_id      = data.aws_ami.this.image_id
+  image_id      = len(var.instance_ami) > 0 ? var.instance_ami : data.aws_ami.this.id
   instance_type = var.instance_type
   #   ebs_optimized     = true
   #   enable_monitoring = true
