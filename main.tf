@@ -100,6 +100,13 @@ module "asg_bastion" {
     cpu_credits = "standard"
   }
 
+  instance_refresh = {
+    strategy = "Rolling"
+    preferences = {
+      min_healthy_percentage = 90
+    }
+  }
+
   instance_market_options = {
     market_type = "spot"
     #     spot_options = {
@@ -132,7 +139,8 @@ module "asg_bastion" {
   tag_specifications = [
     {
       resource_type = "instance"
-      tags          = var.tags
+      tags          = merge(var.tags, { propagate_at_launch = true })
     }
   ]
+
 }
