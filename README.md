@@ -1,4 +1,5 @@
 # AWS Terraform Module for EC2 Bastion with SSM
+[![e2e tests](https://github.com/hazelops/terraform-aws-ec2-bastion/actions/workflows/run.e2e-tests.yml/badge.svg)](https://github.com/hazelops/terraform-aws-ec2-bastion/actions/workflows/run.e2e-tests.yml)
 This module creates a basic EC2 bastion host (Single or ASG) in a private subnet of a VPC and connects it to AWS Systems Manager.
 This Bastion host can be used to access other private resources in the VPC via SSM.
 There is no need to expose it via a public IP for SSH access since we're using SSM as a first transport.
