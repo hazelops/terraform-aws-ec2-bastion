@@ -8,7 +8,7 @@ data "aws_ami" "this" {
 
   filter {
     name   = "name"
-    values = ["al2023-ami-2023*-*-x86_64"]
+    values = ["al2023-ami-2023*-*-${local.instance_arch}"]
   }
 
   filter {

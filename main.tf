@@ -1,6 +1,7 @@
 resource "aws_security_group" "this" {
   count  = var.manage_security_group ? 1 : 0
   vpc_id = var.vpc_id
+  name   = "${var.env}-${var.name}"
 
   ingress {
     protocol    = "tcp"
