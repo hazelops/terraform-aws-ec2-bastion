@@ -20,7 +20,10 @@ jobs:
           SLACK_CHANNEL: core-sre
           SLACK_ICON_EMOJI: ":information_source:"
           SLACK_MESSAGE: |
-            Release <https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}|${{ github.event.release.tag_name }}> published!        
+            Release <https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}|${{ github.event.release.tag_name }}> published!
+            
+            ${{ github.event.release.body }}
+            
 
           SLACK_TITLE: "${{ github.repository }}"
           SLACK_USERNAME: GitHub Actions
