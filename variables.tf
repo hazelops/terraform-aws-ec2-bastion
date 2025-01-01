@@ -37,9 +37,9 @@ variable "instance_type" {
 }
 
 variable "instance_ami" {
-  type = string
+  type        = string
   description = "AMI ID override for the bastion host. Keep in mind, this module config is targeting Amazon Linux 2023)"
-  default = ""
+  default     = ""
 }
 
 variable "security_groups" {
