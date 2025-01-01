@@ -2,6 +2,10 @@ name: Release
 on:
   release:
     types: [released]
+
+env:
+  TERRAFORM_REGISTRY_NAME: hazelops/ec2-bastion
+
 jobs:
   internal-slack-notification:
     runs-on: ubuntu-latest
@@ -21,5 +25,5 @@ jobs:
           SLACK_TITLE: "${{ github.repository }}"
           SLACK_USERNAME: GitHub Actions
           SLACK_FOOTER: |
-            <https://registry.terraform.io/modules/hazelops/ssm-parameters/aws/${{ github.event.release.tag_name }}|hazelops/ssm-parameters>
+            <https://registry.terraform.io/modules/${{ env.TERRAFORM_REGISTRY_NAME }}/aws/${{ github.event.release.tag_name }}|${{ env.TERRAFORM_REGISTRY_NAME }}>
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
