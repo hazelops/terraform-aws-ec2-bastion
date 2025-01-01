@@ -1,0 +1,25 @@
+name: Release
+on:
+  release:
+    types: [released]
+jobs:
+  internal-slack-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Post to Slack
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_COLOR: good
+          SLACK_CHANNEL: core-sre
+          SLACK_ICON_EMOJI: ":information_source:"
+          SLACK_MESSAGE: |
+            Release <https://github.com/${{ github.repository }}/releases/tag/${{ github.event.release.tag_name }}|${{ github.event.release.tag_name }}> published!        
+
+          SLACK_TITLE: "${{ github.repository }}"
+          SLACK_USERNAME: GitHub Actions
+          SLACK_FOOTER: |
+            <https://registry.terraform.io/modules/hazelops/ssm-parameters/aws/${{ github.event.release.tag_name }}|hazelops/ssm-parameters>
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
