@@ -33,7 +33,7 @@ variable "ec2_key_pair_name" {
 variable "instance_type" {
   type        = string
   description = "EC2 instance type for bastion host"
-  default     = "t3.nano"
+  default     = "t4g.nano"
 }
 
 variable "instance_ami" {
