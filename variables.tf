@@ -104,7 +104,13 @@ variable "asg_cpu_threads_per_core" {
 # }
 
 variable "disk_size" {
-    type        = number
-    description = "Disk size for the bastion host"
-    default     = 20
+  type        = number
+  description = "Disk size for the bastion host"
+  default     = 20
+}
+
+variable "disk_type" {
+  type        = string
+  description = "Disk type for the bastion host"
+  default     = "gp2"
 }

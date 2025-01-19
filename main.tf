@@ -37,6 +37,14 @@ resource "aws_instance" "this" {
   tags = merge({
     Name = "${var.env}-${var.name}"
   }, var.tags)
+
+  root_block_device {
+    delete_on_termination = true
+    encrypted             = true
+    volume_type           = var.disk_type
+    volume_size           = var.disk_size
+  }
+
 }
 
 module "asg_bastion" {
@@ -83,7 +91,7 @@ module "asg_bastion" {
         delete_on_termination = true
         encrypted             = true
         volume_size           = var.disk_size
-        volume_type           = "gp2"
+        volume_type           = var.disk_type
       }
     },
 
