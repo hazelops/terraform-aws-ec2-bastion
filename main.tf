@@ -45,6 +45,7 @@ resource "aws_instance" "this" {
     volume_size           = var.disk_size
   }
 
+  // TODO: Add secondary conditional volume
 }
 
 module "asg_bastion" {
@@ -95,6 +96,15 @@ module "asg_bastion" {
       }
     },
 
+    var.external_ebs_volume_id != "" ? {
+      device_name = "/dev/sdh"
+      no_device   = 0
+      ebs = {
+        delete_on_termination = false
+        encrypted             = true
+        volume_id             = var.external_ebs_volume_id
+      }
+    } : null
   ]
 
   capacity_reservation_specification = {
