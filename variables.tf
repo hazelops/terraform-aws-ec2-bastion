@@ -116,7 +116,7 @@ variable "disk_type" {
 }
 
 variable "external_ebs_volume_id" {
-    type        = string
-    description = "External EBS volume ID to attach to the bastion host"
-    default     = ""
+  type        = string
+  description = "External EBS volume ID to attach to the bastion host"
+  default     = ""
 }
