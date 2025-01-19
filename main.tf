@@ -24,11 +24,11 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_instance" "this" {
-  count                = var.asg_enabled ? 0 : 1
-  ami                  = length(var.instance_ami) > 0 ? var.instance_ami : data.aws_ami.this.id
-  key_name             = var.ec2_key_pair_name
-  instance_type        = var.instance_type
-  iam_instance_profile = aws_iam_instance_profile.this[count.index].name
+  count                  = var.asg_enabled ? 0 : 1
+  ami                    = length(var.instance_ami) > 0 ? var.instance_ami : data.aws_ami.this.id
+  key_name               = var.ec2_key_pair_name
+  instance_type          = var.instance_type
+  iam_instance_profile   = aws_iam_instance_profile.this[count.index].name
   vpc_security_group_ids = var.manage_security_group ? concat(var.security_groups, [
     aws_security_group.this[count.index].id
   ]) : var.security_groups
@@ -37,6 +37,13 @@ resource "aws_instance" "this" {
   tags = merge({
     Name = "${var.env}-${var.name}"
   }, var.tags)
+
+  root_block_device {
+    delete_on_termination = true
+    encrypted = true
+    volume_type = var.disk_type
+    volume_size = var.disk_size
+  }
 }
 
 module "asg_bastion" {
@@ -53,7 +60,7 @@ module "asg_bastion" {
   desired_capacity          = 1
   wait_for_capacity_timeout = 0
   health_check_type         = "EC2"
-  vpc_zone_identifier       = var.private_subnets
+  vpc_zone_identifier = var.private_subnets
 
   # Launch template
   launch_template_name        = "${var.env}-${var.name}"
@@ -83,7 +90,7 @@ module "asg_bastion" {
         delete_on_termination = true
         encrypted             = true
         volume_size           = var.disk_size
-        volume_type           = "gp2"
+        volume_type           = var.disk_type
       }
     },
 
@@ -130,7 +137,7 @@ module "asg_bastion" {
       delete_on_termination = true
       description           = "eth0"
       device_index          = 0
-      security_groups       = concat(var.security_groups, [aws_security_group.this[count.index].id])
+      security_groups = concat(var.security_groups, [aws_security_group.this[count.index].id])
     }
   ]
 
@@ -141,7 +148,7 @@ module "asg_bastion" {
   tag_specifications = [
     {
       resource_type = "instance"
-      tags          = merge(var.tags, { propagate_at_launch = true })
+      tags = merge(var.tags, { propagate_at_launch = true })
     }
   ]
 
