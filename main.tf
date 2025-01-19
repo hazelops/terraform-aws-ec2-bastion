@@ -82,10 +82,11 @@ module "asg_bastion" {
       ebs = {
         delete_on_termination = true
         encrypted             = true
-        volume_size           = 20
+        volume_size           = var.disk_size
         volume_type           = "gp2"
       }
     },
+
   ]
 
   capacity_reservation_specification = {
