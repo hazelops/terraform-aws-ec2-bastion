@@ -102,3 +102,9 @@ variable "asg_cpu_threads_per_core" {
 #   description = "Atun port forwarding discovery configuration"
 #   default = {}
 # }
+
+variable "disk_size" {
+    type        = number
+    description = "Disk size for the bastion host"
+    default     = 20
+}
