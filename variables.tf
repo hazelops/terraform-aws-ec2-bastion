@@ -112,5 +112,11 @@ variable "disk_size" {
 variable "disk_type" {
   type        = string
   description = "Disk type for the bastion host"
-  default     = "gp2"
+  default     = "gp3"
+}
+
+variable "external_ebs_volume_id" {
+    type        = string
+    description = "External EBS volume ID to attach to the bastion host"
+    default     = ""
 }
