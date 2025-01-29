@@ -51,14 +51,21 @@ module "vpc" {
 
 }
 
-# # RDS as per https://github.com/terraform-aws-modules/terraform-aws-rds-aurora/blob/v9.11.0/examples/serverless/main.tf#L26C1-L64C2
+
+data "aws_rds_engine_version" "postgresql" {
+  engine  = "aurora-postgresql"
+  version = "14.12"
+}
+
+# # RDS as per https://github.com/terraform-aws-modules/terraform-aws-rds-aurora/blob/v9.11.0/examples/serverless/main.tf#L150-L197
 module "rds" {
   source = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 9.11"
 
   name              = "aurora-postgresql"
-  engine            = "aurora-postgresql"
-  engine_mode       = "serverless"
+  engine            = data.aws_rds_engine_version.postgresql.engine
+  engine_version    = data.aws_rds_engine_version.postgresql.version
+  engine_mode       = "provisioned"
   master_username   = "demo"
 
   vpc_id               = module.vpc.vpc_id
