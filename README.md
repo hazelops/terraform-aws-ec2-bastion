@@ -14,7 +14,7 @@ Below is a simple usage example of the module.
 ```terraform
 module "bastion" {
     source    = "hazelops/ec2-bastion/aws"
-    version   = "~> 4.0"
+    version   = "~> 5.0"
     
     env               = "dev"
     vpc_id            = "vpc-1234567890"
@@ -91,19 +91,19 @@ atun up
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 4 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 6 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 6 |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_asg_bastion"></a> [asg\_bastion](#module\_asg\_bastion) | terraform-aws-modules/autoscaling/aws | ~>6.10 |
+| <a name="module_asg_bastion"></a> [asg\_bastion](#module\_asg\_bastion) | terraform-aws-modules/autoscaling/aws | ~>9.0 |
 
 ## Resources
 
@@ -117,7 +117,6 @@ atun up
 | [aws_ami.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
 | [aws_availability_zones.available](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones) | data source |
 | [aws_iam_policy_document.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
-| [aws_region.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region) | data source |
 
 ## Inputs
 
@@ -127,10 +126,13 @@ atun up
 | <a name="input_asg_cpu_core_count"></a> [asg\_cpu\_core\_count](#input\_asg\_cpu\_core\_count) | Number of CPU cores to use for autoscaling group | `number` | `1` | no |
 | <a name="input_asg_cpu_threads_per_core"></a> [asg\_cpu\_threads\_per\_core](#input\_asg\_cpu\_threads\_per\_core) | Number of threads per core to use for autoscaling group | `number` | `1` | no |
 | <a name="input_asg_enabled"></a> [asg\_enabled](#input\_asg\_enabled) | Enable autoscaling group for bastion host. If enabled, the bastion host will be created as an autoscaling group | `bool` | `false` | no |
-| <a name="input_atun_config"></a> [atun\_config](#input\_atun\_config) | Atun port forwarding discovery configuration | `map(string)` | `{}` | no |
+| <a name="input_disk_size"></a> [disk\_size](#input\_disk\_size) | Disk size for the bastion host | `number` | `20` | no |
+| <a name="input_disk_type"></a> [disk\_type](#input\_disk\_type) | Disk type for the bastion host | `string` | `"gp3"` | no |
 | <a name="input_ec2_key_pair_name"></a> [ec2\_key\_pair\_name](#input\_ec2\_key\_pair\_name) | EC2 Key Pair Name that the bastion host would be created with | `string` | n/a | yes |
 | <a name="input_env"></a> [env](#input\_env) | Environment name, for example `dev` | `string` | n/a | yes |
-| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type for bastion host | `string` | `"t3.nano"` | no |
+| <a name="input_external_ebs_volume_id"></a> [external\_ebs\_volume\_id](#input\_external\_ebs\_volume\_id) | External EBS volume ID to attach to the bastion host | `string` | `""` | no |
+| <a name="input_instance_ami"></a> [instance\_ami](#input\_instance\_ami) | AMI ID override for the bastion host. Keep in mind, this module config is targeting Amazon Linux 2023) | `string` | `""` | no |
+| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | EC2 instance type for bastion host | `string` | `"t4g.nano"` | no |
 | <a name="input_manage_iam_instance_profile"></a> [manage\_iam\_instance\_profile](#input\_manage\_iam\_instance\_profile) | Whether to manage the IAM role for the bastion host | `bool` | `true` | no |
 | <a name="input_manage_security_group"></a> [manage\_security\_group](#input\_manage\_security\_group) | Whether to manage the security group for the bastion host | `bool` | `true` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name of the bastion host | `string` | `"bastion"` | no |

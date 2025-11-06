@@ -50,7 +50,7 @@ resource "aws_instance" "this" {
 
 module "asg_bastion" {
   source  = "terraform-aws-modules/autoscaling/aws"
-  version = "~>6.10"
+  version = "~>9.0"
 
   count = var.asg_enabled ? 1 : 0
 
