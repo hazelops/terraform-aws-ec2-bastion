@@ -26,7 +26,7 @@ module "bastion" {
 
 module "vpc" {
   source  = "registry.terraform.io/terraform-aws-modules/vpc/aws"
-  version = "~> 5.0"
+  version = "~> 6.0"
 
   name = "${var.env}-vpc"
   cidr = "10.1.0.0/16"
